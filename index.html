@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Oddiy Quiz</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+        .quiz-box{
+            max-width: 450px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        button{
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            background: dodgerblue;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover{
+            background: #0b63ce;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-box">
+    <h2>HTML bo‘yicha Quiz</h2>
+
+    <p id="question"></p>
+
+    <div>
+        <label><input type="radio" name="answer" value="a"> <span id="a_text"></span></label><br><br>
+        <label><input type="radio" name="answer" value="b"> <span id="b_text"></span></label><br><br>
+        <label><input type="radio" name="answer" value="c"> <span id="c_text"></span></label><br><br>
+        <label><input type="radio" name="answer" value="d"> <span id="d_text"></span></label>
+    </div>
+
+    <button onclick="nextQuestion()">Keyingi</button>
+
+    <h3 id="result"></h3>
+</div>
+
+<script>
+    const quiz = [
+        {
+            question: "HTMLning to‘liq nomi nima?",
+            a: "Hyper Text Markup Language",
+            b: "High Transfer Mark Line",
+            c: "Hyper Tool Multi Language",
+            d: "Home Tool Markup List",
+            correct: "a"
+        },
+        {
+            question: "<title> tegi nimaga xizmat qiladi?",
+            a: "Sahifa fon rangini o‘zgartiradi",
+            b: "Sahifa nomini ko‘rsatadi",
+            c: "Matnni kattalashtiradi",
+            d: "Rasm yuklaydi",
+            correct: "b"
+        },
+        {
+            question: "HTMLda rasm qo‘yish tegi?",
+            a: "<pic>",
+            b: "<image>",
+            c: "<img>",
+            d: "<photo>",
+            correct: "c"
+        }
+    ];
+
+    let index = 0;
+    let score = 0;
+
+    function loadQuiz(){
+        const q = quiz[index];
+        document.getElementById("question").innerText = q.question;
+        document.getElementById("a_text").innerText = q.a;
+        document.getElementById("b_text").innerText = q.b;
+        document.getElementById("c_text").innerText = q.c;
+        document.getElementById("d_text").innerText = q.d;
+
+        let options = document.getElementsByName("answer");
+        options.forEach(o => o.checked = false);
+    }
+
+    function nextQuestion(){
+        let answer;
+        document.getElementsByName("answer").forEach(o => {
+            if(o.checked) answer = o.value;
+        });
+
+        if(!answer) return alert("Javobni tanlang!");
+
+        if(answer === quiz[index].correct) score++;
+
+        index++;
+
+        if(index < quiz.length){
+            loadQuiz();
+        } else {
+            document.getElementById("result").innerHTML = 
+                "Test tugadi! To‘g‘ri javoblar: " + score + " / " + quiz.length;
+        }
+    }
+
+    loadQuiz();
+</script>
+
+</body>
+</html>
